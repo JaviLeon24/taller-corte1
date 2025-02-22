@@ -1,0 +1,22 @@
+@startuml
+class com.alejandro.main.GestorRestaurante
+class com.alejandro.main.RestauranteMain
+class com.alejandro.modelo.Bebida
+class com.alejandro.modelo.Factura
+class com.alejandro.modelo.Mesa
+class com.alejandro.modelo.Producto
+class java.util.ArrayList
+class java.util.Arrays
+class java.util.InputMismatchException
+class java.util.List
+class java.util.Scanner
+com.alejandro.main.GestorRestaurante ..> com.alejandro.modelo.Bebida
+com.alejandro.main.GestorRestaurante ..> com.alejandro.modelo.Factura
+com.alejandro.main.GestorRestaurante ..> com.alejandro.modelo.Mesa
+com.alejandro.main.GestorRestaurante ..> com.alejandro.modelo.Producto
+com.alejandro.main.GestorRestaurante ..> java.util.ArrayList
+com.alejandro.main.GestorRestaurante ..> java.util.Arrays
+com.alejandro.main.GestorRestaurante ..> java.util.InputMismatchException
+com.alejandro.main.GestorRestaurante ..> java.util.List
+com.alejandro.main.GestorRestaurante ..> java.util.Scanner
+@enduml
