@@ -8,7 +8,8 @@ package com.alejandro.modelo;
  *
  * @author jalm2
  */
-public class Producto {
+public abstract class Producto {
+
     private String nombre;
     private double precio;
 
@@ -24,10 +25,8 @@ public class Producto {
     public double getPrecio() {
         return precio;
     }
-    
-    public void crearProducto (){
-        
-    }
+
+    public abstract String descripcion();
 
     @Override
     public String toString() {

@@ -9,25 +9,23 @@ package com.alejandro.modelo;
  * @author jalm2
  */
 public class Mesa {
-    private int numero;
-    private Pedido pedido;
-    private boolean ocupada;
 
-    public Mesa(int numero) {
+    private int numero;
+    private int capacidad;
+    private boolean ocupada;
+    private Pedido pedido;
+
+    public Mesa(int numero, int capacidad) {
         this.numero = numero;
-        this.pedido = new Pedido();
+        this.capacidad = capacidad;
         this.ocupada = false;
     }
 
-    public int getNumero() {
-        return numero;
+    public int getCapacidad() {
+        return capacidad;
     }
 
-    public Pedido getPedido() {
-        return pedido;
-    }
-
-    public boolean isOcupada() {
+    public boolean estaOcupada() {
         return ocupada;
     }
 
@@ -37,5 +35,18 @@ public class Mesa {
 
     public void liberar() {
         this.ocupada = false;
+        this.pedido = null;
+    }
+
+    public int getNumero() {
+        return numero;
+    }
+
+    public void asignarPedido(Pedido pedido) {
+        this.pedido = pedido;
+    }
+
+    public Pedido getPedido() {
+        return pedido;
     }
 }

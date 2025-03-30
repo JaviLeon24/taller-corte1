@@ -12,28 +12,33 @@ import java.util.List;
  * @author jalm2
  */
 public class Pedido {
-    private List<Producto> productos;
-    private double total;
 
-    public Pedido() {
+    private Mesa mesa;
+    private List<Producto> productos;
+
+    public Pedido(Mesa mesa) {
+        this.mesa = mesa;
         this.productos = new ArrayList<>();
-        this.total = 0;
     }
 
     public void agregarProducto(Producto producto) {
         productos.add(producto);
-        total += producto.getPrecio();
     }
-
-    public double getTotal() {
-        return total;
-    }
-
-    public void mostrarPedido() {
-        System.out.println("Pedido actual:");
-        for (Producto p : productos) {
-            System.out.println(p);
+    
+    public void eliminarProducto(int indice) {
+        if (indice >= 0 && indice < productos.size()) {
+            productos.remove(indice);
+        } else {
+            System.out.println("Índice de producto inválido.");
         }
-        System.out.println("Total: $" + total);
+    }
+
+    public List<Producto> getProductos() {
+        return productos;
+    }
+
+    public double calcularTotal() {
+        return productos.stream().mapToDouble(Producto::getPrecio).sum();
     }
 }
+

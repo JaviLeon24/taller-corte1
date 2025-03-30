@@ -9,6 +9,7 @@ package com.alejandro.modelo;
  * @author jalm2
  */
 public class Bebida extends Producto {
+
     private boolean alcoholica;
 
     public Bebida(String nombre, double precio, boolean alcoholica) {
@@ -18,5 +19,10 @@ public class Bebida extends Producto {
 
     public boolean esAlcoholica() {
         return alcoholica;
+    }
+
+    @Override
+    public String descripcion() {
+        return getNombre() + (alcoholica ? " (Alcohólica)" : " (No alcohólica)");
     }
 }
