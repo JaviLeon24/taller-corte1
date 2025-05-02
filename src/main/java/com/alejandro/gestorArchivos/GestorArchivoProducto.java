@@ -68,14 +68,14 @@ public class GestorArchivoProducto {
 
         File archivo = new File(carpeta, nombreArchivo);
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(archivo))) {
-            bw.write("TIPO;NOMBRE;PRECIO;ALCOHOLICA");
+            bw.write("TIPO;NOMBRE;PRECIO");
             bw.newLine();
 
             for (Producto producto : productos) {
                 if (producto instanceof Plato p) {
                     bw.write("Plato;" + p.getNombre() + ";" + p.getPrecio() + ";");
                 } else if (producto instanceof Bebida b) {
-                    bw.write("Bebida;" + b.getNombre() + ";" + b.getPrecio() + ";" + b.esAlcoholica());
+                    bw.write("Bebida;" + b.getNombre() + ";" + b.getPrecio() + ";");
                 }
                 bw.newLine();
             }

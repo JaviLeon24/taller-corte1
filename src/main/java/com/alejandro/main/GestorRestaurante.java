@@ -5,8 +5,11 @@
 package com.alejandro.main;
 
 import com.alejandro.gestorArchivos.GestorArchivoProducto;
+import com.alejandro.logica.implementacion.CocinaImpl;
 import com.alejandro.manejoExcepciones.MesaNoDisponibleException;
-import com.alejandro.modelo.Cocina;
+import com.alejandro.logica.CocinaLogica;
+import com.alejandro.logica.PedidoLogica;
+import com.alejandro.logica.implementacion.PedidoImpl;
 import com.alejandro.modelo.EstadoPedido;
 import com.alejandro.modelo.Mesa;
 import com.alejandro.modelo.Mesero;
@@ -29,6 +32,7 @@ public class GestorRestaurante {
 
     private static List<Producto> menu = new ArrayList<>();
     private static final List<Mesa> mesas = new ArrayList<>();
+    private static final PedidoLogica pedidoLogica = new PedidoImpl();
     private static final Map<Integer, Mesero> meseros = new HashMap<>();
 
     static {
@@ -52,7 +56,7 @@ public class GestorRestaurante {
         try {
             menu = GestorArchivoProducto.leerProductosDesdeArchivo("data/menu.csv");
         } catch (IOException e) {
-            System.out.println("Error al cargar el menú: " + e.getMessage());
+            System.err.println("Error al cargar el menú: " + e.getMessage());
             return;
         }
 
@@ -93,7 +97,7 @@ public class GestorRestaurante {
                         System.out.println("Opción inválida.");
                 }
             } catch (InputMismatchException e) {
-                System.out.println("Debe ingresar un número válido.");
+                System.err.println("Debe ingresar un número válido.");
                 scanner.nextLine();
             }
 
@@ -153,7 +157,7 @@ public class GestorRestaurante {
                 System.out.println("Seleccione producto (0 para finalizar):");
                 opcion = scanner.nextInt();
                 if (opcion > 0 && opcion <= menu.size()) {
-                    pedido.agregarProducto(menu.get(opcion - 1));
+                    pedidoLogica.agregarProducto(pedido ,menu.get(opcion - 1));
                 }
             } while (opcion != 0);
 
@@ -167,7 +171,8 @@ public class GestorRestaurante {
                 int eleccion = scanner.nextInt();
                 switch (eleccion) {
                     case 1 -> {
-                        Cocina.recibirPedido(pedido);
+                        CocinaLogica cocina = new CocinaImpl();
+                        cocina.recibirPedido(pedido);
                         System.out.println("Estado del pedido: " + pedido.getEstado());
                         break OUTER;
                     }
@@ -176,16 +181,16 @@ public class GestorRestaurante {
                     case 3 -> {
                         System.out.println("Ingrese el número del producto a eliminar:");
                         int eliminar = scanner.nextInt();
-                        pedido.eliminarProducto(eliminar - 1);
+                        pedidoLogica.eliminarProducto(pedido, eliminar - 1);
                     }
                     default -> {
                     }
                 }
             }
         } catch (MesaNoDisponibleException e) {
-            System.out.println("Error: " + e.getMessage());
+            System.err.println("Error: " + e.getMessage());
         } catch (InputMismatchException e) {
-            System.out.println("Debe ingresar un número válido.");
+            System.err.println("Debe ingresar un número válido.");
             scanner.nextLine();
         }
     }
@@ -214,7 +219,7 @@ public class GestorRestaurante {
             validarMesaConPedido(mesa);
 
             Pedido pedido = mesa.getPedido();
-            if (!pedido.puedeModificar()) {
+            if (!pedidoLogica.puedeModificar(pedido)) {
                 System.out.println("El pedido no se puede modificar en este estado: " + pedido.getEstado());
                 return;
             }
@@ -223,11 +228,11 @@ public class GestorRestaurante {
             System.out.println("Seleccione producto a agregar:");
             int opcion = scanner.nextInt();
             if (opcion > 0 && opcion <= menu.size()) {
-                pedido.agregarProducto(menu.get(opcion - 1));
+                pedidoLogica.agregarProducto(pedido, menu.get(opcion - 1));
             }
 
         } catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
+            System.err.println("Error: " + e.getMessage());
         }
 
     }
@@ -246,13 +251,13 @@ public class GestorRestaurante {
         try {
             int opcion = scanner.nextInt();
             if (opcion > 0 && opcion <= menu.size()) {
-                pedido.agregarProducto(menu.get(opcion - 1));
+                pedidoLogica.agregarProducto(pedido, menu.get(opcion - 1));
                 System.out.println("Producto agregado correctamente.");
             } else {
                 System.out.println("Selección inválida.");
             }
         } catch (InputMismatchException e) {
-            System.out.println("Debe ingresar un número válido.");
+            System.err.println("Debe ingresar un número válido.");
             scanner.nextLine();
         }
 
@@ -272,7 +277,7 @@ public class GestorRestaurante {
             validarMesaConPedido(mesa);
 
             Pedido pedido = mesa.getPedido();
-            if (!pedido.puedeModificar()) {
+            if (!pedidoLogica.puedeModificar(pedido)) {
                 System.out.println("El pedido no se puede modificar en este estado: " + pedido.getEstado());
                 return;
             }
@@ -283,10 +288,10 @@ public class GestorRestaurante {
             }
             System.out.println("Seleccione el número del producto a eliminar:");
             int indice = scanner.nextInt();
-            pedido.eliminarProducto(indice - 1);
+            pedidoLogica.eliminarProducto(pedido, indice - 1);
 
         } catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
+            System.err.println("Error: " + e.getMessage());
         }
     }
 
@@ -306,11 +311,11 @@ public class GestorRestaurante {
             Pedido pedido = mesa.getPedido();
             System.out.println("\nPedido de la mesa " + mesa.getNumero() + ":");
             pedido.getProductos().forEach(p -> System.out.println(p.descripcion() + " - $" + p.getPrecio()));
-            System.out.println("Total provisional: $" + pedido.calcularTotal());
+            System.out.println("Total provisional: $" + pedidoLogica.calcularTotal(pedido));
             System.out.println("Estado: " + pedido.getEstado() + "\n");
 
         } catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
+            System.err.println("Error: " + e.getMessage());
         }
 
     }
@@ -339,14 +344,14 @@ public class GestorRestaurante {
 
             System.out.println("\nRecibo para la mesa " + mesa.getNumero() + ":");
             pedido.getProductos().forEach(p -> System.out.println(p.descripcion() + " - $" + p.getPrecio()));
-            System.out.println("Total: $" + pedido.calcularTotal());
+            System.out.println("Total: $" + pedidoLogica.calcularTotal(pedido));
             try {
                 String carpeta = "data/pedidos";
                 String nombreArchivo = "pedido_mesa_" + mesa.getNumero() + "_" + System.currentTimeMillis() + ".csv";
                 GestorArchivoProducto.guardarPedido(carpeta, nombreArchivo, pedido.getProductos());
                 System.out.println("Pedido guardado en archivo.\n");
             } catch (IOException e) {
-                System.out.println("Error al guardar el pedido: " + e.getMessage());
+                System.err.println("Error al guardar el pedido: " + e.getMessage());
             }
 
             mesa.liberar();
@@ -359,10 +364,11 @@ public class GestorRestaurante {
                 mesero.getMesasAsignadas().remove(mesa);
             }
             
-            Cocina.removerPedido(pedido);
+            CocinaLogica cocina = new CocinaImpl();
+            cocina.removerPedido(pedido);
 
         } catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
+            System.err.println("Error: " + e.getMessage());
         }
 
     }
@@ -390,7 +396,8 @@ public class GestorRestaurante {
      * Método que muestra los pedidos listos para entregar a las respectivas mesas
      */
     private static void mostrarPedidosListos() {
-        List<Pedido> listos = Cocina.getPedidosListos();
+        CocinaLogica cocina = new CocinaImpl();
+        List<Pedido> listos = cocina.getPedidosListos();
         if (listos.isEmpty()) {
             System.out.println("\nNo hay pedidos listos.");
         } else {
@@ -409,9 +416,10 @@ public class GestorRestaurante {
         try {
             System.out.println("Ingrese número de mesa cuyo pedido está listo:");
             int mesaId = scanner.nextInt();
-            Cocina.marcarPedidoComoListo(mesaId);
+            CocinaLogica cocina = new CocinaImpl();
+            cocina.marcarPedidoComoListo(mesaId);
         } catch (InputMismatchException e) {
-            System.out.println("Debe ingresar un número válido.");
+            System.err.println("Debe ingresar un número válido.");
             scanner.nextLine();
         }
     }

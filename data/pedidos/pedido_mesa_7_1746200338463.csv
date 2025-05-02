@@ -1,0 +1,6 @@
+TIPO;NOMBRE;PRECIO;ALCOHOLICA
+Plato;Sobrebarriga en Salsa;25000.0;
+Plato;Chuleta de Cerdo;20000.0;
+Plato;Hamburguesa;20000.0;
+Bebida;Cerveza Importada;10000.0;true
+Bebida;Gaseosa;4000.0;false

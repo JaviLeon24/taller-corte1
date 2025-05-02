@@ -14,61 +14,11 @@ import java.util.List;
 public class Pedido {
 
     private Mesa mesa;
-    private List<Producto> productos;
-    private EstadoPedido estado;
+    private List<Producto> productos = new ArrayList<>();
+    private EstadoPedido estado = EstadoPedido.EN_PREPARACION;
 
     public Pedido(Mesa mesa) {
         this.mesa = mesa;
-        this.productos = new ArrayList<>();
-        this.estado = EstadoPedido.EN_PREPARACION;
-    }
-
-    /**
-     * Método para agregar productos a un pedido
-     * @param producto
-     * @return 
-     */
-    public boolean agregarProducto(Producto producto) {
-        if (estado == EstadoPedido.EN_PREPARACION) {
-            productos.add(producto);
-            return true;
-        }
-        System.out.println("\nPedido agregado con éxito\n");
-        return false;
-    }
-
-    /**
-     * Método para eliminar productos de un pedido
-     * @param indice
-     * @return 
-     */
-    public boolean eliminarProducto(int indice) {
-        if (estado != EstadoPedido.EN_PREPARACION) return false;
-        if (indice >= 0 && indice < productos.size()) {
-            productos.remove(indice);
-            return true;
-        }
-        return false;
-    }
-
-    public List<Producto> getProductos() {
-        return productos;
-    }
-
-    public double calcularTotal() {
-        return productos.stream().mapToDouble(Producto::getPrecio).sum();
-    }
-
-    public EstadoPedido getEstado() {
-        return estado;
-    }
-
-    public void setEstado(EstadoPedido estado) {
-        this.estado = estado;
-    }
-
-    public boolean puedeModificar() {
-        return estado == EstadoPedido.EN_PREPARACION;
     }
 
     public Mesa getMesa() {
@@ -78,6 +28,16 @@ public class Pedido {
     public void setMesa(Mesa mesa) {
         this.mesa = mesa;
     }
-    
-    
+
+    public List<Producto> getProductos() {
+        return productos;
+    }
+
+    public EstadoPedido getEstado() {
+        return estado;
+    }
+
+    public void setEstado(EstadoPedido estado) {
+        this.estado = estado;
+    }
 }

@@ -1,10 +1,20 @@
-package com.alejandro.modelo;
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package com.alejandro.logica.implementacion;
 
+import com.alejandro.logica.CocinaLogica;
+import com.alejandro.modelo.EstadoPedido;
+import com.alejandro.modelo.Pedido;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Cocina {
-
+/**
+ *
+ * @author jalm2
+ */
+public class CocinaImpl implements CocinaLogica {
     private static final List<Pedido> pedidosEnPreparacion = new ArrayList<>();
     private static final List<Pedido> pedidosListos = new ArrayList<>();
 
@@ -13,7 +23,8 @@ public class Cocina {
      *
      * @param pedido
      */
-    public static void recibirPedido(Pedido pedido) {
+    @Override
+    public void recibirPedido(Pedido pedido) {
         if (pedido.getEstado() == EstadoPedido.EN_PREPARACION) {
             pedidosEnPreparacion.add(pedido);
             System.out.println("Pedido de la mesa " + pedido.getMesa().getNumero() + " recibido en cocina.");
@@ -25,7 +36,8 @@ public class Cocina {
      *
      * @param numeroMesa
      */
-    public static void marcarPedidoComoListo(int numeroMesa) {
+    @Override
+    public void marcarPedidoComoListo(int numeroMesa) {
         Pedido pedido = pedidosEnPreparacion.stream()
                 .filter(p -> p.getMesa().getNumero() == numeroMesa)
                 .findFirst()
@@ -41,15 +53,18 @@ public class Cocina {
         }
     }
 
-    public static void removerPedido(Pedido pedido) {
+    @Override
+    public void removerPedido(Pedido pedido) {
         pedidosListos.remove(pedido);
     }
 
-    public static List<Pedido> getPedidosListos() {
+    @Override
+    public List<Pedido> getPedidosListos() {
         return new ArrayList<>(pedidosListos);
     }
 
-    public static List<Pedido> getPedidosEnPreparacion() {
+    @Override
+    public List<Pedido> getPedidosEnPreparacion() {
         return new ArrayList<>(pedidosEnPreparacion);
     }
 }
