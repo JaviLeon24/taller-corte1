@@ -15,22 +15,40 @@ public class Pedido {
 
     private Mesa mesa;
     private List<Producto> productos;
+    private EstadoPedido estado;
 
     public Pedido(Mesa mesa) {
         this.mesa = mesa;
         this.productos = new ArrayList<>();
+        this.estado = EstadoPedido.EN_PREPARACION;
     }
 
-    public void agregarProducto(Producto producto) {
-        productos.add(producto);
+    /**
+     * Método para agregar productos a un pedido
+     * @param producto
+     * @return 
+     */
+    public boolean agregarProducto(Producto producto) {
+        if (estado == EstadoPedido.EN_PREPARACION) {
+            productos.add(producto);
+            return true;
+        }
+        System.out.println("\nPedido agregado con éxito\n");
+        return false;
     }
-    
-    public void eliminarProducto(int indice) {
+
+    /**
+     * Método para eliminar productos de un pedido
+     * @param indice
+     * @return 
+     */
+    public boolean eliminarProducto(int indice) {
+        if (estado != EstadoPedido.EN_PREPARACION) return false;
         if (indice >= 0 && indice < productos.size()) {
             productos.remove(indice);
-        } else {
-            System.out.println("Índice de producto inválido.");
+            return true;
         }
+        return false;
     }
 
     public List<Producto> getProductos() {
@@ -40,5 +58,26 @@ public class Pedido {
     public double calcularTotal() {
         return productos.stream().mapToDouble(Producto::getPrecio).sum();
     }
-}
 
+    public EstadoPedido getEstado() {
+        return estado;
+    }
+
+    public void setEstado(EstadoPedido estado) {
+        this.estado = estado;
+    }
+
+    public boolean puedeModificar() {
+        return estado == EstadoPedido.EN_PREPARACION;
+    }
+
+    public Mesa getMesa() {
+        return mesa;
+    }
+
+    public void setMesa(Mesa mesa) {
+        this.mesa = mesa;
+    }
+    
+    
+}

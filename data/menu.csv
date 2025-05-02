@@ -1,0 +1,9 @@
+TIPO;NOMBRE;PRECIO;ALCOHOLICA
+Plato;Hamburguesa;20000;
+Plato;Pizza Personal;8000;
+Plato;Menú Corriente;15000;
+Plato;Sobrebarriga en Salsa;25000;
+Plato;Chuleta de Cerdo;20000;
+Bebida;Gaseosa;4000;false
+Bebida;Cerveza Nacional;6000;true
+Bebida;Cerveza Importada;10000;true

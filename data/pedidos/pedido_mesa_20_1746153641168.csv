@@ -1,0 +1,4 @@
+TIPO;NOMBRE;PRECIO;ALCOHOLICA
+Bebida;Gaseosa;4000.0;false
+Plato;Hamburguesa;20000.0;
+Plato;Pizza Personal;8000.0;
