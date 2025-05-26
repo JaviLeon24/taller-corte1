@@ -8,12 +8,16 @@ import com.alejandro.logica.PedidoLogica;
 import com.alejandro.modelo.EstadoPedido;
 import com.alejandro.modelo.Pedido;
 import com.alejandro.modelo.Producto;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
  * @author jalm2
  */
 public class PedidoImpl implements PedidoLogica {
+    
+    private List<Pedido> pedidos = new ArrayList<>();
 
     /**
      * Método para agregar productos a un pedido
@@ -28,7 +32,6 @@ public class PedidoImpl implements PedidoLogica {
             pedido.getProductos().add(producto);
             return true;
         }
-        System.out.println("\nPedido agregado con éxito\n");
         return false;
     }
 
@@ -41,7 +44,9 @@ public class PedidoImpl implements PedidoLogica {
      */
     @Override
     public boolean eliminarProducto(Pedido pedido, int indice) {
-        if (pedido.getEstado() != EstadoPedido.EN_PREPARACION) return false;
+        if (pedido.getEstado() != EstadoPedido.EN_PREPARACION) {
+            return false;
+        }
         if (indice >= 0 && indice < pedido.getProductos().size()) {
             pedido.getProductos().remove(indice);
             return true;
@@ -51,8 +56,9 @@ public class PedidoImpl implements PedidoLogica {
 
     /**
      * Método que calcula el valor total de un pedido
+     *
      * @param pedido
-     * @return 
+     * @return
      */
     @Override
     public double calcularTotal(Pedido pedido) {
@@ -62,12 +68,19 @@ public class PedidoImpl implements PedidoLogica {
     }
 
     /**
-     * Método que valida si se puede agregar o eliminar un producto a un pedido dependiendo de su estado
+     * Método que valida si se puede agregar o eliminar un producto a un pedido
+     * dependiendo de su estado
+     *
      * @param pedido
-     * @return 
+     * @return
      */
     @Override
     public boolean puedeModificar(Pedido pedido) {
         return pedido.getEstado() == EstadoPedido.EN_PREPARACION;
+    }
+
+    @Override
+    public List<Pedido> obtenerPedidos() {
+        return pedidos;
     }
 }

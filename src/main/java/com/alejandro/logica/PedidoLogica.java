@@ -6,6 +6,7 @@ package com.alejandro.logica;
 
 import com.alejandro.modelo.Pedido;
 import com.alejandro.modelo.Producto;
+import java.util.List;
 
 /**
  *
@@ -20,5 +21,7 @@ public interface PedidoLogica {
     double calcularTotal(Pedido pedido);
 
     boolean puedeModificar(Pedido pedido);
+    
+    List<Pedido> obtenerPedidos();
 
 }

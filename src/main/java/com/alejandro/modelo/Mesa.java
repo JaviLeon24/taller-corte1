@@ -4,11 +4,13 @@
  */
 package com.alejandro.modelo;
 
+import java.io.Serializable;
+
 /**
  *
  * @author jalm2
  */
-public class Mesa {
+public class Mesa implements Serializable {
 
     private int numero;
     private int capacidad;
@@ -45,6 +47,7 @@ public class Mesa {
 
     public void asignarPedido(Pedido pedido) {
         this.pedido = pedido;
+        this.ocupada = true;
     }
 
     public Pedido getPedido() {

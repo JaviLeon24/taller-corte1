@@ -23,11 +23,13 @@ import java.util.List;
 public class GestorArchivoProducto {
 
     /**
-     * Lee los productos desde un archivo CSV y hace uso de los constructores de PLATO y BEBIDA según el caso encontrado en dicha lectura
+     * Lee los productos desde un archivo CSV y hace uso de los constructores de
+     * PLATO y BEBIDA según el caso encontrado en dicha lectura
+     *
      * @param ruta
-     * @return 
+     * @return
      * @throws java.io.IOException
-    */
+     */
     public static List<Producto> leerProductosDesdeArchivo(String ruta) throws IOException {
         List<Producto> productos = new ArrayList<>();
         try (BufferedReader br = new BufferedReader(new FileReader(ruta))) {
@@ -52,11 +54,13 @@ public class GestorArchivoProducto {
     }
 
     /**
-     * Guarda los pedidos por mesa cuando se genera el recibo correspondiente en un archivo CSV, dicho CSV contiene la información de cada producto.
+     * Guarda los pedidos por mesa cuando se genera el recibo correspondiente en
+     * un archivo CSV, dicho CSV contiene la información de cada producto.
+     *
      * @param rutaCarpeta
      * @param nombreArchivo
      * @param productos
-     * @throws IOException 
+     * @throws IOException
      */
     public static void guardarPedido(String rutaCarpeta, String nombreArchivo, List<Producto> productos) throws IOException {
         File carpeta = new File(rutaCarpeta);
@@ -80,6 +84,24 @@ public class GestorArchivoProducto {
                 bw.newLine();
             }
         }
+    }
+
+    public static List<String> cargarMeseros() {
+        List<String> lista = new ArrayList<>();
+        try (BufferedReader br = new BufferedReader(new FileReader("data/meseros.txt"))) {
+            String linea;
+            while ((linea = br.readLine()) != null) {
+                linea = linea.trim();
+                if (!linea.isEmpty() && !linea.contains(",")) {
+                    lista.add(linea);
+                } else {
+                    System.err.println("Línea ignorada por formato inválido: " + linea);
+                }
+            }
+        } catch (IOException e) {
+            System.err.println("Error leyendo archivo de meseros: " + e.getMessage());
+        }
+        return lista;
     }
 
 }

@@ -4,11 +4,13 @@
  */
 package com.alejandro.modelo;
 
+import java.io.Serializable;
+
 /**
  *
  * @author jalm2
  */
-public enum EstadoPedido {
+public enum EstadoPedido implements Serializable {
     EN_PREPARACION,
     LISTO,
     ENTREGADO,

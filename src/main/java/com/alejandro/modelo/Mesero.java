@@ -4,6 +4,7 @@
  */
 package com.alejandro.modelo;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,7 +12,7 @@ import java.util.List;
  *
  * @author jalm2
  */
-public class Mesero {
+public class Mesero implements Serializable {
 
     private String nombre;
     private List<Mesa> mesasAsignadas;

@@ -4,11 +4,13 @@
  */
 package com.alejandro.modelo;
 
+import java.io.Serializable;
+
 /**
  *
  * @author jalm2
  */
-public abstract class Producto {
+public abstract class Producto implements Serializable {
 
     private String nombre;
     private double precio;
