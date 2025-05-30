@@ -37,12 +37,12 @@ public class PanelPedidos extends JPanel {
     private final DefaultListModel<String> modeloLista;
     private final JList<String> listaProductos;
 
-    public PanelPedidos(Mesa mesa, List<Producto> menu, CocinaControlador cocinaControlador) {
+    public PanelPedidos(Mesa mesa, List<Producto> menu, CocinaControlador cocinaControlador, PedidoLogica pedidoLogica) {
         this.mesa = mesa;
         this.pedido = mesa.getPedido();
         this.menu = menu;
         this.cocinaControlador = cocinaControlador;
-        this.pedidoLogica = new PedidoImpl();
+        this.pedidoLogica = pedidoLogica;
 
         setLayout(new BorderLayout());
 

@@ -29,7 +29,7 @@ public class ControladorInicioPedido {
     private final CocinaControlador cocinaControlador;
 
     public ControladorInicioPedido(List<Mesa> mesas, Map<Integer, Mesero> meseros, CocinaControlador cocinaControlador, PedidoLogica pedidoLogica) {
-        this.pedidoLogica = pedidoLogica;  
+        this.pedidoLogica = pedidoLogica;
         this.mesas = mesas;
         this.meseros = meseros;
         this.menu = cargarMenu();
@@ -92,5 +92,9 @@ public class ControladorInicioPedido {
 
     public void enviarPedidoACocina(Pedido pedido) {
         cocinaControlador.recibirPedido(pedido);
+    }
+
+    public PedidoLogica getPedidoLogica() {
+        return this.pedidoLogica;
     }
 }

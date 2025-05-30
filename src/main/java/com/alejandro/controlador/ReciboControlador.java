@@ -26,7 +26,7 @@ public class ReciboControlador {
     private final Map<Integer, Mesero> meseros;
 
     public ReciboControlador(List<Mesa> mesas, Map<Integer, Mesero> meseros, CocinaControlador cocinaControlador) {
-        this.pedidoLogica = new PedidoImpl();
+        this.pedidoLogica = new PedidoImpl(mesas);
         this.cocinaControlador = cocinaControlador; 
         this.mesas = mesas;
         this.meseros = meseros;

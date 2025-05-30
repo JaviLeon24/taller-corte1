@@ -6,6 +6,7 @@ package com.alejandro.logica.implementacion;
 
 import com.alejandro.logica.PedidoLogica;
 import com.alejandro.modelo.EstadoPedido;
+import com.alejandro.modelo.Mesa;
 import com.alejandro.modelo.Pedido;
 import com.alejandro.modelo.Producto;
 import java.util.ArrayList;
@@ -16,8 +17,17 @@ import java.util.List;
  * @author jalm2
  */
 public class PedidoImpl implements PedidoLogica {
-    
+
     private List<Pedido> pedidos = new ArrayList<>();
+
+    public PedidoImpl(List<Mesa> mesas) {
+        this.pedidos = new ArrayList<>();
+        for (Mesa mesa : mesas) {
+            if (mesa.getPedido() != null) {
+                pedidos.add(mesa.getPedido());
+            }
+        }
+    }
 
     /**
      * Método para agregar productos a un pedido

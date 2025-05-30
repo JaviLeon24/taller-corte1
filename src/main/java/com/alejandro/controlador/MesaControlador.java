@@ -59,7 +59,7 @@ public class MesaControlador {
 
                 Pedido pedido = mesa.getPedido();
 
-                PanelPedidos panelPedidos = new PanelPedidos(mesa, controladorInicio.obtenerMenu(), cocinaControlador);
+                PanelPedidos panelPedidos = new PanelPedidos(mesa, controladorInicio.obtenerMenu(), cocinaControlador, controladorInicio.getPedidoLogica());
                 ventana.cambiarPanel(panelPedidos, "pedidoMesa" + numeroMesa);
             });
         }

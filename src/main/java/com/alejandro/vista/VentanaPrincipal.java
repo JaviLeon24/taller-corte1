@@ -65,7 +65,7 @@ public class VentanaPrincipal extends JFrame {
         }
 
         // Instancias compartidas
-        PedidoLogica pedidoLogica = new PedidoImpl();
+        PedidoLogica pedidoLogica = new PedidoImpl(mesas);
         CocinaLogica cocinaLogica = new CocinaImpl(pedidoLogica);
         CocinaControlador cocinaControlador = new CocinaControlador(cocinaLogica);
 

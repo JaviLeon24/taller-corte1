@@ -34,7 +34,7 @@ public class PanelConsultaMesa extends JPanel {
 
     public PanelConsultaMesa(List<Mesa> mesas) {
         this.mesas = mesas;
-        this.pedidoLogica = new PedidoImpl();
+        this.pedidoLogica = new PedidoImpl(mesas);
 
         setLayout(new BorderLayout());
 
